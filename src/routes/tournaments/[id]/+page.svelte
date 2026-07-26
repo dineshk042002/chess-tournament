@@ -13,7 +13,30 @@
   onMount(() => {
     loadTournamentPlayers();
   });
+  let matches = $state([]);
+
+  async function startRound() {
+    await fetch('/api/matches', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tournament_id: tournamentId })
+    });
+    loadMatches();
+  }
+
+  async function loadMatches() {
+    const res = await fetch(`/api/matches?tournament_id=${tournamentId}`);
+    matches = await res.json();
+  }
 </script>
+<button onclick={startRound}>Start Round</button>
+
+<h2>Matches</h2>
+<ul>
+  {#each matches as match}
+    <li>Player {match.player1_id} vs Player {match.player2_id} — Winner: Player {match.winner_id}</li>
+  {/each}
+</ul>
 
 <h1>Tournament #{tournamentId}</h1>
 
