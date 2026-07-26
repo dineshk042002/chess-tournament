@@ -6,6 +6,7 @@
 
   let tournamentPlayers = $state([]);
   let matches = $state([]);
+  let rankings = $state([]);
 
   // Load players
   async function loadTournamentPlayers() {
@@ -23,6 +24,14 @@
     matches = await res.json();
   }
 
+  // Load rankings
+  async function loadRankings() {
+    const res = await fetch(
+      `/api/rankings?tournament_id=${tournamentId}`
+    );
+    rankings = await res.json();
+  }
+
   // Start new round
   async function startRound() {
     await fetch('/api/matches', {
@@ -36,9 +45,10 @@
     });
 
     await loadMatches();
+    await loadRankings();
   }
 
-  // Get player name from id
+  // Get player name
   function getPlayerName(id) {
     if (!id) return '-';
 
@@ -49,6 +59,7 @@
   onMount(async () => {
     await loadTournamentPlayers();
     await loadMatches();
+    await loadRankings();
   });
 </script>
 
@@ -79,13 +90,26 @@
         {getPlayerName(match.player1_id)}
         vs
         {getPlayerName(match.player2_id)}
-
         —
         Winner:
         {match.winner_id
           ? getPlayerName(match.winner_id)
-          : "Not decided"}
+          : 'Not decided'}
       </li>
     {/each}
   {/if}
 </ul>
+
+<h2>Rankings</h2>
+
+{#if rankings.length === 0}
+  <p>No rankings available.</p>
+{:else}
+  <ol>
+    {#each rankings as rank}
+      <li>
+        {rank.name} — {rank.wins} wins
+      </li>
+    {/each}
+  </ol>
+{/if}
