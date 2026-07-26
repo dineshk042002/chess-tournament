@@ -96,85 +96,74 @@
   });
 </script>
 
-<h1>Tournament #{tournamentId}</h1>
+<div class="max-w-3xl mx-auto p-6 space-y-8">
+  <h1 class="text-3xl font-bold text-slate-800">Tournament #{tournamentId}</h1>
 
-<hr />
+  <section>
+    <h2 class="text-xl font-semibold text-slate-700 mb-3">Add Player to Tournament</h2>
+    <div class="flex gap-2">
+      <select bind:value={selectedPlayerId} class="border border-slate-300 rounded px-3 py-2 flex-1">
+        <option value="">Select Player</option>
+        {#each allPlayers as player}
+          <option value={player.id}>{player.name} ({player.rating})</option>
+        {/each}
+      </select>
+      <button onclick={addPlayerToTournament} class="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-700">
+        Add Player
+      </button>
+    </div>
+  </section>
 
-<h2>Add Player to Tournament</h2>
+  <section>
+    <h2 class="text-xl font-semibold text-slate-700 mb-3">Tournament Players</h2>
+    {#if tournamentPlayers.length === 0}
+      <p class="text-slate-500">No players added.</p>
+    {:else}
+      <ul class="space-y-2">
+        {#each tournamentPlayers as player}
+          <li class="bg-white border border-slate-200 rounded px-4 py-3 shadow-sm">
+            <strong>{player.name}</strong> <span class="text-slate-500">— Rating: {player.rating}</span>
+          </li>
+        {/each}
+      </ul>
+    {/if}
+  </section>
 
-<select bind:value={selectedPlayerId}>
-  <option value="">Select Player</option>
+  <section>
+    <button onclick={startRound} class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700">
+      Start Round
+    </button>
+  </section>
 
-  {#each allPlayers as player}
-    <option value={player.id}>
-      {player.name} ({player.rating})
-    </option>
-  {/each}
-</select>
+  <section>
+    <h2 class="text-xl font-semibold text-slate-700 mb-3">Matches</h2>
+    {#if matches.length === 0}
+      <p class="text-slate-500">No matches available.</p>
+    {:else}
+      <ul class="space-y-2">
+        {#each matches as match}
+          <li class="bg-white border border-slate-200 rounded px-4 py-3 shadow-sm">
+            <strong>{getPlayerName(match.player1_id)}</strong> vs <strong>{getPlayerName(match.player2_id)}</strong>
+            <br />
+            <span class="text-amber-700 font-medium">Winner: {match.winner_id ? getPlayerName(match.winner_id) : 'Not decided'}</span>
+          </li>
+        {/each}
+      </ul>
+    {/if}
+  </section>
 
-<button on:click={addPlayerToTournament}>
-  Add Player
-</button>
-
-<hr />
-
-<h2>Tournament Players</h2>
-
-{#if tournamentPlayers.length === 0}
-  <p>No players added.</p>
-{:else}
-  <ul>
-    {#each tournamentPlayers as player}
-      <li>
-        <strong>{player.name}</strong>
-        - Rating: {player.rating}
-      </li>
-    {/each}
-  </ul>
-{/if}
-
-<hr />
-
-<button on:click={startRound}>
-  Start Round
-</button>
-
-<h2>Matches</h2>
-
-{#if matches.length === 0}
-  <p>No matches available.</p>
-{:else}
-  <ul>
-    {#each matches as match}
-      <li>
-        <strong>{getPlayerName(match.player1_id)}</strong>
-        vs
-        <strong>{getPlayerName(match.player2_id)}</strong>
-
-        <br />
-
-        Winner:
-        {match.winner_id
-          ? getPlayerName(match.winner_id)
-          : 'Not decided'}
-      </li>
-    {/each}
-  </ul>
-{/if}
-
-<hr />
-
-<h2>Rankings</h2>
-
-{#if rankings.length === 0}
-  <p>No rankings available.</p>
-{:else}
-  <ol>
-    {#each rankings as rank}
-      <li>
-        <strong>{rank.name}</strong>
-        — {rank.wins} wins
-      </li>
-    {/each}
-  </ol>
-{/if}
+  <section>
+    <h2 class="text-xl font-semibold text-slate-700 mb-3">Rankings</h2>
+    {#if rankings.length === 0}
+      <p class="text-slate-500">No rankings available.</p>
+    {:else}
+      <ol class="space-y-2 list-decimal list-inside">
+        {#each rankings as rank}
+          <li class="bg-white border border-slate-200 rounded px-4 py-3 shadow-sm inline-block w-full">
+            <strong>{rank.name}</strong> — {rank.wins} wins
+          </li>
+        {/each}
+      </ol>
+    {/if}
+  </section>
+</div>
