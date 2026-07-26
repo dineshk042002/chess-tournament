@@ -6,10 +6,18 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<nav class="bg-slate-800 text-white px-6 py-4 flex gap-6">
-  <a href="/" class="hover:text-amber-400 font-medium">Home</a>
-  <a href="/players" class="hover:text-amber-400 font-medium">Players</a>
-  <a href="/tournaments" class="hover:text-amber-400 font-medium">Tournaments</a>
-</nav>
+<div class="min-h-screen flex flex-col">
+  <nav class="bg-slate-800 text-white px-6 py-4 flex gap-6">
+    <a href="/" class="hover:text-amber-400 font-medium">Home</a>
+    <a href="/players" class="hover:text-amber-400 font-medium">Players</a>
+    <a href="/tournaments" class="hover:text-amber-400 font-medium">Tournaments</a>
+  </nav>
 
-{@render children()}
+  <main class="flex-1">
+    {@render children()}
+  </main>
+
+  <footer class="text-center text-slate-400 text-sm py-6">
+    © Dinesh Krishnamoorthy
+  </footer>
+</div>
