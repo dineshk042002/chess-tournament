@@ -69,15 +69,14 @@ let end_date = $state('');
 
 <ul>
   {#each tournaments as tournament}
-    <li>
-      <strong>{tournament.name}</strong> -
-      {tournament.location} -
-      {tournament.start_date} -
-      {tournament.end_date}
-
-      <button onclick={() => deleteTournament(tournament.id)}>
-        Delete
-      </button>
-    </li>
+<li>
+  <a href={`/tournaments/${tournament.id}`}><strong>{tournament.name}</strong></a> -
+  {tournament.location} -
+  {tournament.start_date} -
+  {tournament.end_date}
+  <button onclick={() => deleteTournament(tournament.id)}>
+    Delete
+  </button>
+</li>
   {/each}
 </ul>
