@@ -17,6 +17,8 @@ export async function PUT({ request }) {
 }
 export async function DELETE({ request }) {
   const data = await request.json();
+  db.prepare('DELETE FROM matches WHERE player1_id = ? OR player2_id = ? OR winner_id = ?').run(data.id, data.id, data.id);
+  db.prepare('DELETE FROM tournament_players WHERE player_id = ?').run(data.id);
   db.prepare('DELETE FROM players WHERE id = ?').run(data.id);
   return json({ success: true });
 }
