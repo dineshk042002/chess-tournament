@@ -18,6 +18,8 @@ export async function PUT({ request }) {
 
 export async function DELETE({ request }) {
   const data = await request.json();
+  db.prepare('DELETE FROM matches WHERE tournament_id = ?').run(data.id);
+  db.prepare('DELETE FROM tournament_players WHERE tournament_id = ?').run(data.id);
   db.prepare('DELETE FROM tournaments WHERE id = ?').run(data.id);
   return json({ success: true });
 }
