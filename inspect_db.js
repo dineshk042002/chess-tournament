@@ -1,0 +1,10 @@
+﻿import { DatabaseSync } from 'node:sqlite';
+const db = new DatabaseSync('chess.db');
+console.log('--- PLAYERS ---');
+console.log(db.prepare('SELECT * FROM players').all());
+console.log('--- TOURNAMENTS ---');
+console.log(db.prepare('SELECT * FROM tournaments').all());
+console.log('--- TOURNAMENT_PLAYERS ---');
+console.log(db.prepare('SELECT * FROM tournament_players').all());
+console.log('--- MATCHES ---');
+console.log(db.prepare('SELECT * FROM matches').all());
