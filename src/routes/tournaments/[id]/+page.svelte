@@ -157,6 +157,11 @@
     {#if rankings.length === 0}
       <p class="text-slate-500">No rankings available.</p>
     {:else}
+    <div class="bg-amber-50 border-2 border-amber-400 rounded-lg px-6 py-4 mb-4 text-center">
+  <p class="text-amber-700 text-sm font-semibold uppercase tracking-wide">🏆 Champion</p>
+  <p class="text-2xl font-bold text-slate-800">{rankings[0].name}</p>
+  <p class="text-slate-600">{rankings[0].wins} wins</p>
+</div>
       <ol class="space-y-2 list-decimal list-inside">
         {#each rankings as rank}
           <li class="bg-white border border-slate-200 rounded px-4 py-3 shadow-sm inline-block w-full">
